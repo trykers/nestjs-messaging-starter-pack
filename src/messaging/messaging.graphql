@@ -1,0 +1,45 @@
+scalar Date
+
+type MUser {
+    firstname: String!
+    lastname: String!
+    email: String!
+    avatar: String!
+}
+
+type Message {
+    author: MUser!
+    date: Date!
+    body: String!
+    readby: [MUser]!
+    threadid: String!
+}
+
+type Messaging {
+    messages: [Message]!
+    users: [MUser]!
+    threadid: String!
+}
+
+type Query {
+    """Récuperer un fil de messages grâce à son id"""
+    thread(threadid: String!): Messaging
+    """Récupérer la liste des thread messaging"""
+    allthread: [String]!
+}
+
+type Mutation {
+    """Permet de créer une messagerie entre deux personnes"""
+    createThread(recipientemail: String!): Messaging
+    sendMessage(threadid: String!, body: String!): Message
+}
+
+type Subscription {
+    newMessageAppend(threadid: String!): Message
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}

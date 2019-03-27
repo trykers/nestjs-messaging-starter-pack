@@ -1,0 +1,28 @@
+enum Roles {
+    USER
+    TECHNICIAN
+    ADMINISTRATOR
+}
+
+type User {
+    firstname: String!
+    lastname: String!
+    email: String!
+    token: String!
+    role: Roles
+    avatar: String
+}
+
+type Query {
+    """This query return the user object"""
+    user(email: String): User
+}
+
+type Mutation {
+    createUser(firstname: String!, lastname: String!, password: String!, email: String!): User
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
